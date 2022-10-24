@@ -1,25 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {MediaList} from "./components/MediaList";
 
 function App() {
+  const [date, setDate] = useState('');
+
+  useEffect(() => {
+    const options = {weekday: "long", month: "long", day: "numeric"};
+    const date = new Date();
+    const day = date.toLocaleDateString('fr-FR', options as any);
+
+    const time = date.toLocaleTimeString('fr-FR', {hour: "2-digit", minute: "2-digit"});
+    setDate(`${day}, ${time}`)
+  }, []);
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        {date}
       </header>
-    </div>
+      <MediaList title="Derniers Films Populaires"/>
+      <MediaList title="Dernières Séries Populaires"/>
+    </>
   );
 }
 
